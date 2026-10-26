@@ -1,5 +1,8 @@
 import entities.*;
 import utils.FabricaInimigos;
+import utils.Loja;
+import utils.Registro;
+import utils.Ranking;
 
 import java.util.Scanner;
 import java.util.List;
@@ -11,86 +14,29 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Escolha seu piloto! (1-3)");
-        mostrarPilotos();
-        Personagem piloto = null;
-        int moedas = 0;
-        Random random = new Random();
-        while (piloto == null) {
-            if (sc.hasNextInt()) {
-                int escolhaPersonagem = sc.nextInt();
-                switch (escolhaPersonagem) {
-                    case 1:
-                        piloto = new Rei("Rei", 100, 17, 3, 100, 5);
+        Loja loja = new Loja(sc);
+        Ranking ranking = new Ranking();
+        boolean jogarDeNovo = true;
 
-                        break;
-                    case 2:
-                        piloto = new Shinji("Shinji", 120, 14, 8, 120, 3);
-                        break;
-                    case 3:
-                        piloto = new Asuka("Asuka", 80, 22, 5, 80, 4);
-                        break;
-                    default:
-                        System.out.println("Opção inválida!");
-                }
-            } else {
-                sc.next(); // descarta o que não é número
-                System.out.println("Digite um número!");
-            }
 
+        while (jogarDeNovo) {
+            int moedas = 0;
+            System.out.println("Escolha seu piloto! (1-3)");
+            mostrarPilotos();
+            Piloto piloto = escolherPiloto(sc);
+
+            int pontos = iniciarJogo(piloto, moedas, loja, sc);
+            fimDeJogo(piloto, pontos);
+
+            ranking.adicionar(new Registro(lerNome(sc), piloto.getNome(), pontos));
+            ranking.exibir();
+            jogarDeNovo = querJogarDeNovo(sc);
         }
-        System.out.println("Piloto escolhido: " + piloto.getNome());
-        System.out.println("Stats: \n Vida: " + piloto.getVida() + "\n Ataque:" + piloto.getAtaque() + "\n Defesa:" + piloto.getDefesa());
-
-
-        List<Inimigo> inimigos = FabricaInimigos.criarTodos();
-        int numeroBatalha = 0; //para lutar com o boss final, Lilith
-        for (Inimigo inimigo : inimigos) {
-            numeroBatalha++;
-            if (numeroBatalha == 4 || numeroBatalha == 7 || numeroBatalha == 10) {
-                int vidaAntes = piloto.getVida();
-                piloto.curar((int) Math.round(piloto.getVidaMaxima() * 0.5));
-                int ganho = piloto.getVida() - vidaAntes;
-                if (ganho > 0) {
-                    System.out.println("Você recuperou vida! (+" + ganho + ")");
-                }
-            }
-
-
-            if (numeroBatalha == 10) {
-                int vidaAntes = piloto.getVida();
-                piloto.curar(15);
-                if (piloto.getVida() > vidaAntes) {
-                    System.out.println("Última batalha, você ganhou um bônus de mais 15 de vida");
-                }
-            }
-            if (moedas > 1 && querEntrarNaLoja(sc, moedas)) {
-                moedas = loja(piloto, moedas, sc);
-            }
-            System.out.println("\n===== BATALHA " + numeroBatalha + " de " + inimigos.size() + " =====");
-            System.out.println(inimigo.getAscii());
-            System.out.println("Inimigo encontrado: " + inimigo.getNome());
-            System.out.println(inimigo.getDescricao());
-
-            lutar(piloto, inimigo, sc);
-
-            if (!piloto.estaVivo()) {
-                break; // morreu, não tem próxima batalha
-            }
-            System.out.println("\nVocê derrotou " + inimigo.getNome() + "!");
-            if (numeroBatalha < inimigos.size()) {
-                moedas++;
-                System.out.println("Você ganhou 1 moeda! (Total: " + moedas + ")");
-            }
-        }
-
-        if (piloto.estaVivo()) {
-            System.out.println("\nVocê venceu! Parabéns, campeão da arena!");
-        } else {
-            System.out.println("\nVocê perdeu... Tente outra vez!");
-        }
-
+        System.out.println("Até a próxima!");
+        sc.close();
     }
+
+
 
     public static void mostrarPilotos() {
         System.out.println("===============================REI AYANAMI (EVA 00)==================================");
@@ -123,7 +69,88 @@ public class Main {
         System.out.println("===========================================================================");
     }
 
-    public static void lutar(Personagem piloto, Inimigo inimigo, Scanner sc) {
+    public static Piloto escolherPiloto(Scanner sc) {
+        Piloto piloto = null;
+        while (piloto == null) {
+            if (sc.hasNextInt()) {
+                int escolhaPersonagem = sc.nextInt();
+                switch (escolhaPersonagem) {
+                    case 1:
+                        piloto = new Rei("Rei", 100, 17, 3, 100, 5);
+
+                        break;
+                    case 2:
+                        piloto = new Shinji("Shinji", 120, 14, 8, 120, 3);
+                        break;
+                    case 3:
+                        piloto = new Asuka("Asuka", 80, 22, 5, 80, 4);
+                        break;
+                    default:
+                        System.out.println("Opção inválida!");
+                }
+            } else {
+                sc.next(); // descarta o que não é número
+                System.out.println("Digite um número!");
+            }
+
+        }
+        System.out.println("Piloto escolhido: " + piloto.getNome());
+        System.out.println("Stats: \n Vida: " + piloto.getVida() + "\n Ataque:" + piloto.getAtaque() + "\n Defesa:" + piloto.getDefesa());
+
+        return piloto;
+    }
+
+    public static int iniciarJogo(Piloto piloto, int moedas, Loja loja, Scanner sc) {
+        int pontos = 0;
+        List<Inimigo> inimigos = FabricaInimigos.criarTodos();
+        int numeroBatalha = 0; //para lutar com o boss final, Lilith
+
+        for (Inimigo inimigo : inimigos) {
+            numeroBatalha++;
+            if (numeroBatalha == 4 || numeroBatalha == 7 || numeroBatalha == 10) {
+                int vidaAntes = piloto.getVida();
+                piloto.curar((int) Math.round(piloto.getVidaMaxima() * 0.5));
+                int ganho = piloto.getVida() - vidaAntes;
+                if (ganho > 0) {
+                    System.out.println("Você recuperou vida! (+" + ganho + ")");
+                }
+            }
+
+            if (numeroBatalha == 10) {
+                int vidaAntes = piloto.getVida();
+                piloto.curar(15);
+                if (piloto.getVida() > vidaAntes) {
+                    System.out.println("Última batalha, você ganhou um bônus de mais 15 de vida");
+                }
+            }
+            if (moedas > 1 && loja.querEntrar(moedas)) {
+                moedas = loja.abrir(piloto, moedas);
+            }
+
+            System.out.println("\n===== BATALHA " + numeroBatalha + " de " + inimigos.size() + " =====");
+            System.out.println(inimigo.getAscii());
+            System.out.println("Inimigo encontrado: " + inimigo.getNome());
+            System.out.println(inimigo.getDescricao());
+
+            lutar(piloto, inimigo, sc);
+
+            if (!piloto.estaVivo()) {
+                break; // morreu, não tem próxima batalha
+            }
+
+            System.out.println("\nVocê derrotou " + inimigo.getNome() + "!");
+            int ganhos = pontosDaBatalha(numeroBatalha);
+            pontos += ganhos;
+            System.out.println("+" + ganhos + " pontos! (Total: " + pontos + ")");
+            if (numeroBatalha < inimigos.size()) {
+                moedas++;
+                System.out.println("Você ganhou 1 moeda! (Total: " + moedas + ")");
+            }
+        }
+        return pontos;
+    }
+
+    public static void lutar(Piloto piloto, Inimigo inimigo, Scanner sc) {
         while (piloto.estaVivo() && inimigo.estaVivo()) {
             turnoDoPiloto(piloto, inimigo, sc);
             if (!inimigo.estaVivo()) {
@@ -134,7 +161,7 @@ public class Main {
     }
 
 
-    public static void turnoDoPiloto(Personagem piloto, Inimigo inimigo, Scanner sc) {
+    public static void turnoDoPiloto(Piloto piloto, Inimigo inimigo, Scanner sc) {
         piloto.iniciarTurno(); // zera o defendendo
         System.out.println("=========SEU TURNO=========");
         exibirStatus(inimigo, piloto);
@@ -173,17 +200,17 @@ public class Main {
 
     }
 
-    public static void turnoDoInimigo(Inimigo inimigo, Personagem piloto) {
+    public static void turnoDoInimigo(Inimigo inimigo, Piloto piloto) {
         inimigo.iniciarTurno();
         System.out.println("\n--- Turno de " + inimigo.getNome() + " ---");
 
         // vida alta usa a tabela 1, vida baixa usa a t1abela 2
-        int[] tabela = inimigo.getVida() > inimigo.getVidaMaxima() / 2
+        Acao[] tabela = inimigo.getVida() > inimigo.getVidaMaxima() / 2
                 ? inimigo.getpAtacarDefender1()
-                : inimigo.getpAtacarDefender2(); //depois de metade da vida o anjo tem probabilidades maiores de defender (alguns)
+                : inimigo.getpAtacarDefender2();
         Random random = new Random();
-        int acao = tabela[random.nextInt(tabela.length)]; // sorteia do array de probabilidades: 0 = atacar, 1 = defender
-        if (acao == 0) {
+        Acao acao = tabela[random.nextInt(tabela.length)];
+        if (acao == Acao.ATACAR) {
             System.out.println(inimigo.getNome() + " ataca!");
             inimigo.atacar(piloto);
         } else {
@@ -192,13 +219,13 @@ public class Main {
 
     }
 
-    public static void exibirStatus(Inimigo inimigo, Personagem piloto) {
+    public static void exibirStatus(Inimigo inimigo, Piloto piloto) {
         System.out.println(piloto.getNome() + " (vida: " + piloto.getVida() + ")  x  "
                 + inimigo.getNome() + " (vida: " + inimigo.getVida() + ")");
 
     }
 
-    public static void exibirEstatisticas(Personagem piloto, Inimigo inimigo) {
+    public static void exibirEstatisticas(Piloto piloto, Inimigo inimigo) {
         System.out.println("\n=========== ESTATÍSTICAS ===========");
         System.out.println("--- " + piloto.getNome() + " ---");
         System.out.println("Vida: " + piloto.getVida() + "/" + piloto.getVidaMaxima());
@@ -216,17 +243,7 @@ public class Main {
         System.out.println("====================================");
     }
 
-    public static int chanceDefender(int[] tabela) {
-        int defesas = 0;
-        for (int acao : tabela) {
-            if (acao == 1) {
-                defesas++;
-            }
-        }
-        return defesas * 100 / tabela.length;
-    }
-
-    public static void mostrarMenuAcoes(Personagem piloto) {
+    public static void mostrarMenuAcoes(Piloto piloto) {
         System.out.println("Ações: ");
         System.out.println("1 - Atacar (" + piloto.getAtaque() + ")");
         System.out.println("2 - Defender (" + piloto.getDefesa() + ")");
@@ -235,9 +252,52 @@ public class Main {
         System.out.println("5 - Ver estatísticas");
     }
 
-    public static boolean querEntrarNaLoja(Scanner sc, int moedas) {
+    public static int chanceDefender(Acao[] tabela) {
+        int defesas = 0;
+        for (Acao acao : tabela) {
+            if (acao == Acao.DEFENDER) {
+                defesas++;
+            }
+        }
+        return defesas * 100 / tabela.length;
+    }
+
+    public static int pontosDaBatalha(int numeroBatalha) {
+        if (numeroBatalha <= 3) {
+            return 5;
+        }
+        if (numeroBatalha <= 6) {
+            return 10;
+        }
+        if (numeroBatalha <= 9) {
+            return 15;
+        }
+        return 20; // Lilith
+    }
+
+
+    public static void fimDeJogo(Piloto piloto, int pontos) {
+        if (piloto.estaVivo()) {
+            System.out.println("\nVocê venceu! Parabéns, campeão da arena!");
+        } else {
+            System.out.println("\nVocê perdeu... Tente outra vez!");
+        }
+        System.out.println("Pontuação final: " + pontos);
+    }
+
+    public static String lerNome(Scanner sc) {
+        System.out.println("Insira seu nome: (utilize apenas 4 letras)");
+        String nome = sc.next().toUpperCase();
+        while (nome.length() != 4 || !nome.matches("[A-Z]+")) {
+            System.out.println("Nome inválido! Digite exatamente 4 letras:");
+            nome = sc.next().toUpperCase();
+        }
+        return nome;
+    }
+
+    public static boolean querJogarDeNovo(Scanner sc) {
         while (true) {
-            System.out.println("\nVocê tem " + moedas + " moeda(s). Quer entrar na loja? (S/N)");
+            System.out.println("\nQuer jogar de novo? (S/N)");
             String resposta = sc.next().trim().toUpperCase();
             if (resposta.equals("S")) {
                 return true;
@@ -247,101 +307,8 @@ public class Main {
             }
             System.out.println("Digite S ou N!");
         }
+
     }
-
-    public static int loja(Personagem piloto, int moedas, Scanner sc) {
-        boolean comprando = true;
-        while (comprando) {
-            System.out.println("\n======================== LOJA =========================");
-            System.out.println("Moedas: " + moedas + " | Vida: " + piloto.getVida() + "/" + piloto.getVidaMaxima()
-                    + " | Ataque: " + piloto.getAtaque() + " | Defesa: " + piloto.getDefesa()
-                    + " | Poções: " + piloto.getNroPocoes());
-            System.out.println("1 - +5 de ataque (3 moedas)");
-            System.out.println("2 - +10 de defesa (6 moedas)");
-            System.out.println("3 - +3 de defesa (2 moedas)");
-            System.out.println("4 - +20 de vida máxima (6 moedas)");
-            System.out.println("5 - Recuperar toda a vida (6 moedas)");
-            System.out.println("6 - +1 poção (2 moedas)");
-            System.out.println("7 - +1 uso de " + piloto.getNomeEspecial() + " (3 moedas)");
-            System.out.println("0 - Sair da loja");
-
-            if (!sc.hasNextInt()) {
-                sc.next();
-                System.out.println("Digite um número!");
-                continue;
-            }
-            int opcao = sc.nextInt();
-            switch (opcao) {
-                case 1:
-                    if (temMoedas(moedas, 3)) {
-                        moedas -= 3;
-                        piloto.setAtaque(piloto.getAtaque() + 5);
-                        System.out.println("Ataque agora: " + piloto.getAtaque());
-                    }
-                    break;
-                case 2:
-                    if (temMoedas(moedas, 6)) {
-                        moedas -= 6;
-                        piloto.setDefesa(piloto.getDefesa() + 10);
-                        System.out.println("Defesa agora: " + piloto.getDefesa());
-                    }
-                    break;
-                case 3:
-                    if (temMoedas(moedas, 2)) {
-                        moedas -= 2;
-                        piloto.setDefesa(piloto.getDefesa() + 3);
-                        System.out.println("Defesa agora: " + piloto.getDefesa());
-                    }
-                    break;
-                case 4:
-                    if (temMoedas(moedas, 6)) {
-                        moedas -= 6;
-                        piloto.setVidaMaxima(piloto.getVidaMaxima() + 20);
-                        piloto.setVida(piloto.getVida() + 20); // sobe a vida atual junto
-                        System.out.println("Vida: " + piloto.getVida() + "/" + piloto.getVidaMaxima());
-                    }
-                    break;
-                case 5:
-                    if (piloto.getVida() == piloto.getVidaMaxima()) {
-                        System.out.println("Sua vida já está cheia!");
-                    } else if (temMoedas(moedas, 6)) {
-                        moedas -= 6;
-                        piloto.setVida(piloto.getVidaMaxima());
-                        System.out.println("Vida restaurada: " + piloto.getVida() + "/" + piloto.getVidaMaxima());
-                    }
-                    break;
-                case 6:
-                    if (temMoedas(moedas, 2)) {
-                        moedas -= 2;
-                        piloto.adicionarPocao();
-                        System.out.println("Poções: " + piloto.getNroPocoes());
-                    }
-                    break;
-                case 7:
-                    if (temMoedas(moedas, 3)) {
-                        moedas -= 3;
-                        piloto.adicionarUsoEspecial();
-                        System.out.println(piloto.getNomeEspecial() + ": " + piloto.getUsosEspecial() + " restantes");
-                    }
-                    break;
-                case 0:
-                    comprando = false;
-                    break;
-                default:
-                    System.out.println("Opção inválida!");
-            }
-        }
-        return moedas; // devolve o troco pro main guardar
-    }
-
-    public static boolean temMoedas(int moedas, int custo) {
-        if (moedas < custo) {
-            System.out.println("Moedas insuficientes!");
-            return false;
-        }
-        return true;
-    }
-
 }
 
 

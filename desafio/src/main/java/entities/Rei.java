@@ -1,23 +1,14 @@
 package entities;
 //Rei == mago
-public class Rei extends Personagem {
-    private int contadorAtaqueEspecial; // 5
+public class Rei extends Piloto {
+
     private static final int BONUS_DANO = 5;
 
-
+    //construtor
     public Rei (String nome, int vida, int ataque, int defesa,int vidaMaxima,
-                int contadorAtaqueEspecial) {
-        super(nome,vida ,ataque, defesa, vidaMaxima );
-        this.contadorAtaqueEspecial = contadorAtaqueEspecial;
-    }
+                int usosEspecial) {
+        super(nome,vida ,ataque, defesa, vidaMaxima, usosEspecial );
 
-    public int getContadorAtaqueEspecial() {
-        return contadorAtaqueEspecial;
-    }
-
-    //ataque especial
-    public boolean temEspecial() {
-        return contadorAtaqueEspecial > 0;
     }
 
     public boolean ataqueInfalivel(Personagem alvo) {
@@ -29,15 +20,11 @@ public class Rei extends Personagem {
         }
         System.out.println(getNome() + " usa ATAQUE INFALÍVEL, a defesa não adianta!");
         alvo.tomarDanoDireto(getAtaque() + BONUS_DANO);
-        contadorAtaqueEspecial--;
+        gastarUsoEspecial();
         return true;
     }
 
-
-
-    @Override
-    public int getUsosEspecial() { return contadorAtaqueEspecial; }
-
+    //métodos sobrescritos
     @Override
     public String getNomeEspecial() { return "Ataque Infalível"; }
 
@@ -48,8 +35,5 @@ public class Rei extends Personagem {
     public String getDescricaoEspecial() {
         return "Causa " + (getAtaque() + BONUS_DANO) + " de dano ignorando a defesa do alvo, mais um adicional de 5 no ataque.";
     }
-
-    @Override
-    public void adicionarUsoEspecial() { contadorAtaqueEspecial++; }
 
 }

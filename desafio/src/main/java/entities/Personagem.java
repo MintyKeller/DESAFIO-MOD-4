@@ -1,14 +1,13 @@
 package entities;
 
 public abstract class Personagem {
+    //atributos
     private String nome;
     private int vida;
     private int ataque;
     private int defesa;
     private boolean defendendo = false;
     private int vidaMaxima;
-    private int nroPocoes = 3;
-
 
     //construtor
     public Personagem(String nome, int vida, int ataque, int defesa, int vidaMaxima) {
@@ -18,7 +17,6 @@ public abstract class Personagem {
         this.defesa = defesa;
         this.vidaMaxima = vidaMaxima;
     }
-
 
     //getters
     public String getNome() {
@@ -37,16 +35,8 @@ public abstract class Personagem {
         return defesa;
     }
 
-    public int getNroPocoes() {
-        return nroPocoes;
-    }
-
     public int getVidaMaxima() {
         return vidaMaxima;
-    }
-
-    public String getDescricaoEspecial() {
-        return "";
     }
 
     //setters
@@ -70,9 +60,7 @@ public abstract class Personagem {
         this.vidaMaxima = vidaMaxima;
     }
 
-    //metodos
-
-
+    //outros métodos
     // chamado no começo do turno de cada um (jogador e inimigo)
     public void iniciarTurno() {
         defendendo = false;
@@ -113,52 +101,6 @@ public abstract class Personagem {
         defendendo = true;
         System.out.println(nome + "  se prepara para defender!");
     }
-
-    public boolean tomarPocao() {
-        if (nroPocoes == 0) {
-            System.out.println("Não há mais poções disponiveis!");
-            System.out.println("Você ainda está no seu turno, tente novamente:");
-            return false;
-        }
-
-        if (this.vida == vidaMaxima) {
-            System.out.println("Você está com a vida máxima, e portanto não pode curar!");
-            System.out.println("Você ainda está no seu turno, tente novamente:");
-            return false;
-        }
-
-        this.nroPocoes--;
-        int antes = this.vida;
-        this.vida = Math.min(vidaMaxima, this.vida + 20);
-        System.out.println("Você usou uma poção e recuperou " + (this.vida - antes) + " de vida (Poções restantes: " + nroPocoes + ")");
-        return true;
-
-
-    }
-
-    public void adicionarPocao() {
-        nroPocoes++;
-    }
-
-    public void curar(int quantidade) {
-        vida = Math.min(vidaMaxima, vida + quantidade);
-    }
-
-    //ataques especiais dos pilotos
-    public int getUsosEspecial() {
-        return 0;
-    }
-
-    public String getNomeEspecial() {
-        return "Nenhum";
-    }
-
-    public boolean usarEspecial(Personagem alvo) {
-        return false;
-    }
-
-    public void adicionarUsoEspecial() { }
-
 }
 
 

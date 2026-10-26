@@ -1,27 +1,18 @@
 package entities;
 import java.util.Random;
 //Asuka == arqueiro
-public class Asuka extends Personagem {
-    private int contadorAtaqueEspecial; // 4
+public class Asuka extends Piloto {
+
     private static final int CHANCE_ATAQUE = 50;
     private Random random = new Random();
 
+    //construtor
     public Asuka (String nome, int vida, int ataque, int defesa,int vidaMaxima,
-                  int contadorAtaqueEspecial) {
-        super(nome,vida ,ataque, defesa, vidaMaxima );
-        this.contadorAtaqueEspecial = contadorAtaqueEspecial;
-    }
+                  int usosEspecial) {
+        super(nome,vida ,ataque, defesa, vidaMaxima, usosEspecial );
 
-    public int getContadorAtaqueEspecial() {
-        return contadorAtaqueEspecial;
     }
-
     //ataque especial
-
-    public boolean temEspecial() {
-        return contadorAtaqueEspecial > 0;
-    }
-
     public boolean ataqueDuplo(Personagem alvo) {
         //chance de causar dano dobrado
         if (!temEspecial()) {
@@ -36,26 +27,25 @@ public class Asuka extends Personagem {
             System.out.println(getNome() + " tenta o ataque duplo, mas acerta só um tiro!");
             alvo.tomarDano(getAtaque());
         }
-        contadorAtaqueEspecial--;
+        gastarUsoEspecial();
         return true;
     }
 
+    //métodos sobrescritos
+    @Override
+    public String getNomeEspecial() {
+        return "Ataque Duplo";
+    }
 
     @Override
-    public int getUsosEspecial() { return contadorAtaqueEspecial; }
-
-    @Override
-    public String getNomeEspecial() { return "Ataque Duplo"; }
-
-    @Override
-    public boolean usarEspecial(Personagem alvo) { return ataqueDuplo(alvo); }
+    public boolean usarEspecial(Personagem alvo) {
+        return ataqueDuplo(alvo);
+    }
 
     @Override
     public String getDescricaoEspecial() {
         return CHANCE_ATAQUE + "% de chance de causar " + (getAtaque() * 2)
                 + " de dano. Se falhar, acerta um tiro normal de " + getAtaque() + ".";
     }
-    @Override
-    public void adicionarUsoEspecial() { contadorAtaqueEspecial++; }
 }
 

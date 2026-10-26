@@ -1,14 +1,17 @@
 package entities;
 
 public class Inimigo extends Personagem {
+    //atributos
     private String ascii;
-    private int[] pAtacarDefender1;
-    private int[] pAtacarDefender2;
+    private Acao[] pAtacarDefender1;
+    private Acao[] pAtacarDefender2;
+
     private String descricao;
     private String estilo;
 
+    //construtor
     public Inimigo(String nome, int vida, int ataque, int defesa, int vidaMaxima,
-                   String ascii, int[] pAtacarDefender1, int[] pAtacarDefender2,
+                   String ascii, Acao[] pAtacarDefender1, Acao[] pAtacarDefender2,
                    String descricao, String estilo) {
         super(nome, vida, ataque, defesa, vidaMaxima);
         this.ascii = ascii;
@@ -19,15 +22,16 @@ public class Inimigo extends Personagem {
 
     }
 
+    //getters
     public String getAscii() {
         return ascii;
     }
 
-    public int[] getpAtacarDefender1() {
+    public Acao[] getpAtacarDefender1() {
         return pAtacarDefender1;
     }
 
-    public int[] getpAtacarDefender2() {
+    public Acao[] getpAtacarDefender2() {
         return pAtacarDefender2;
     }
 

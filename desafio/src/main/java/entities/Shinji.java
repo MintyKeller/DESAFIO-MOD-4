@@ -1,26 +1,18 @@
 package entities;
 
 //Shinji == guerreiro
-public class Shinji extends Personagem {
-    private int contadorAtaqueEspecial; //3
+public class Shinji extends Piloto {
+
     private static final int CUSTO_VIDA = 10;
     private static final int BONUS_DANO = 18;
 
+    //construtor
     public Shinji(String nome, int vida, int ataque, int defesa, int vidaMaxima,
-                  int contadorAtaqueEspecial) {
-        super(nome, vida, ataque, defesa, vidaMaxima);
-        this.contadorAtaqueEspecial = contadorAtaqueEspecial;
-    }
-
-    public int getContadorAtaqueEspecial() {
-        return contadorAtaqueEspecial;
+                  int usosEspecial) {
+        super(nome, vida, ataque, defesa, vidaMaxima, usosEspecial);
     }
 
     // ataque especial
-    public boolean temEspecial() {
-        return contadorAtaqueEspecial > 0;
-    }
-
     public boolean ataqueForte(Personagem alvo) {
         //ataque forte (+18) que gasta vida
         if (!temEspecial()) {
@@ -31,16 +23,11 @@ public class Shinji extends Personagem {
         alvo.tomarDano(getAtaque() + BONUS_DANO);
         setVida(Math.max(1, getVida() - CUSTO_VIDA));
         System.out.println(getNome() + " usa ATAQUE FORTE e sacrifica " + CUSTO_VIDA + " de vida!");
-        contadorAtaqueEspecial--;
+        gastarUsoEspecial();
         return true;
     }
 
-
-    @Override
-    public int getUsosEspecial() {
-        return contadorAtaqueEspecial;
-    }
-
+    //métodos sobrescritos
     @Override
     public String getNomeEspecial() {
         return "Ataque Forte";
@@ -57,9 +44,5 @@ public class Shinji extends Personagem {
                 + " de vida (nunca te deixa com menos de 1).";
     }
 
-    @Override
-    public void adicionarUsoEspecial() {
-        contadorAtaqueEspecial++;
-    }
 
 }
