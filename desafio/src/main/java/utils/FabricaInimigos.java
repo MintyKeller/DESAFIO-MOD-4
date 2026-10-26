@@ -7,6 +7,11 @@ import static utils.DadosAnjos.*;
 import entities.Acao;
 import static entities.Acao.*;
 
+//IMPORTANDO CLASSE DOS ANJOS:
+import entities.Israfel;
+import entities.Ramiel;
+import entities.Sahaquiel;
+
 public class FabricaInimigos {
     public static List<Inimigo> criarTodos() {
         List<Inimigo> inimigos = new ArrayList<>();
@@ -16,7 +21,7 @@ public class FabricaInimigos {
                 new Acao[]{ATACAR, ATACAR, ATACAR, ATACAR, ATACAR},
                 SACHIEL_DESCRICAO, SACHIEL_ESTILO));
 
-        inimigos.add(new Inimigo("Ramiel", 35, 7, 1, 35, RAMIEL_ASCII,
+        inimigos.add(new Ramiel("Ramiel", 60, 7, 1, 35, RAMIEL_ASCII,
                 new Acao[]{ATACAR, ATACAR, ATACAR, ATACAR, DEFENDER},
                 new Acao[]{ATACAR, ATACAR, DEFENDER, DEFENDER, DEFENDER},
                 RAMIEL_DESCRICAO, RAMIEL_ESTILO));
@@ -26,17 +31,17 @@ public class FabricaInimigos {
                 new Acao[]{ATACAR, ATACAR, ATACAR, DEFENDER, DEFENDER},
                 GAGHIEL_DESCRICAO, GAGHIEL_ESTILO));
 
-        inimigos.add(new Inimigo("Israfel", 50, 9, 3, 50, ISRAFEL_ASCII,
+        inimigos.add(new Israfel("Israfel", 55, 9, 3, 50, ISRAFEL_ASCII,
                 new Acao[]{ATACAR, ATACAR, ATACAR, ATACAR, DEFENDER},
                 new Acao[]{ATACAR, ATACAR, ATACAR, ATACAR, DEFENDER},
                 ISRAFEL_DESCRICAO, ISRAFEL_ESTILO));
 
-        inimigos.add(new Inimigo("Matarael", 55, 11, 3, 55, MATARAEL_ASCII,
+        inimigos.add(new Inimigo("Matarael", 60, 11, 3, 55, MATARAEL_ASCII,
                 new Acao[]{ATACAR, ATACAR, ATACAR, ATACAR, ATACAR},
                 new Acao[]{ATACAR, ATACAR, ATACAR, ATACAR, ATACAR},
                 MATARAEL_DESCRICAO, MATARAEL_ESTILO));
 
-        inimigos.add(new Inimigo("Sahaquiel", 60, 12, 4, 60, SAHAQUIEL_ASCII,
+        inimigos.add(new Sahaquiel("Sahaquiel", 65, 12, 4, 60, SAHAQUIEL_ASCII,
                 new Acao[]{ATACAR, ATACAR, ATACAR, DEFENDER, DEFENDER},
                 new Acao[]{ATACAR, ATACAR, DEFENDER, DEFENDER, DEFENDER},
                 SAHAQUIEL_DESCRICAO, SAHAQUIEL_ESTILO));
@@ -68,6 +73,13 @@ public class FabricaInimigos {
                 LILITH_DESCRICAO, LILITH_ESTILO));
 
         return inimigos;
+    }
+
+    public static Inimigo criarLilithFase2() {
+        return new Inimigo("Rei Lilith", 100, 18, 6, 100, REI_LILITH_ASCII,
+                new Acao[]{ATACAR, ATACAR, ATACAR, DEFENDER, DEFENDER},
+                new Acao[]{ATACAR, ATACAR, ATACAR, ATACAR, DEFENDER},
+                REI_LILITH_DESCRICAO, REI_LILITH_ESTILO);
     }
 
 }

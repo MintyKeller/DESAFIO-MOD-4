@@ -14,11 +14,11 @@ public class Rei extends Piloto {
     public boolean ataqueInfalivel(Personagem alvo) {
         // ataque que ignora a defesa do alvo
         if (!temEspecial()) {
-            System.out.println("Acabaram os ataques infalíveis!");
-            System.out.println("Você ainda está no seu turno, tente novamente:");
+            System.out.println("            Acabaram os ataques infalíveis!");
+            System.out.println("            Você ainda está no seu turno, tente novamente:");
             return false;
         }
-        System.out.println(getNome() + " usa ATAQUE INFALÍVEL, a defesa não adianta!");
+        System.out.println("            "+getNome() + " usa ATAQUE INFALÍVEL, a defesa não adianta!");
         alvo.tomarDanoDireto(getAtaque() + BONUS_DANO);
         gastarUsoEspecial();
         return true;
@@ -33,7 +33,7 @@ public class Rei extends Piloto {
 
     @Override
     public String getDescricaoEspecial() {
-        return "Causa " + (getAtaque() + BONUS_DANO) + " de dano ignorando a defesa do alvo, mais um adicional de 5 no ataque.";
+        return "            Causa " + (getAtaque() + BONUS_DANO) + " de dano ignorando a defesa do alvo, mais um adicional de 5 no ataque.";
     }
 
 }

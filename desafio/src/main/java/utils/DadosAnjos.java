@@ -175,6 +175,41 @@ public class DadosAnjos {
             "                    ########||#####\n" +
             "                   ____.-'~~~~`-.______";
 
+    public static final String REI_LILITH_ASCII =
+            "           \\  \\                                           /  /\n" +
+                    "            ___\\                                         /___\n" +
+                    "                _\\ \\          .-'\"\"\"\"\"\"\"'-.          / /_\n" +
+                    "                  \\ \\         / ,/|/|\\|\\. \\         / /\n" +
+                    "         __\\       \\ |       | |  _   _  | |       | /       /__\n" +
+                    "            \\   \\   \\|       | | (@) (@) | |       |/   /   /\n" +
+                    "        ___\\ \\   \\   __\\      \\ \\  '-'  / /      /__   /   / /___\n" +
+                    "            ____\\ \\     \\     \\ \\_vvvvv_/ /     /     / /____\n" +
+                    "             ___\\\\ \\     \\     '-._   _.-'     /     / //___\n" +
+                    "                 \\____\\ |         |   |         | /____/\n" +
+                    "       /__/__\\    \\   \\\\|     _.-'|   |'-._     |//   /    /__\\__\\\n" +
+                    "    ___  /    ______\\  \\__   /  /       \\  \\   __/  /______    \\  ___\n" +
+                    "       __            _____   |  |       |  |   _____            __\n" +
+                    "                ___\\   /__   |  |       |  |   __\\   /___\n" +
+                    "                    \\ /      \\ \\  .---.  / /      \\ /\n" +
+                    "                  /___   /   \\_\\ ( @@@ ) /_/   \\   ___\\\n" +
+                    "                 /      /    '-' '.___.' '-'    \\      \\\n" +
+                    "                / ______      '-.|     |.-'      ______ \\\n" +
+                    "           /__/_    /           |       |           \\    _\\__\\\n" +
+                    "          /  /     /            |       |            \\     \\  \\\n" +
+                    "            /     /                                   \\     \\\n" +
+                    "          __    //                                     \\\\    __\n" +
+                    "               //         -~-~-~-~-~-~-~-~-~-~-         \\\\\n" +
+                    "              __      -~-~. .+. .+# .+.#.+. #+.~-~-      __\n" +
+                    "                  -~-~#.+. #+. .+. .+# .+.#.+. #+. ~-~-\n" +
+                    "                -~.+# .+.#.+. #+. .+. .+# .+.#.+. #+. .~-\n" +
+                    "             ~-~ .+. .+# .+.#.+. #+. .+. .+# .+.#.+. #+. ~-~\n" +
+                    "           ~-+. #+. .+. .+# .+.#.+. #+. .+. .+# .+.#.+. #+. -~\n";
+
+    public static final String REI_LILITH_TRANSICAO = "\n            LILITH CAI. \n            ... \n            Silêncio. \n            Você derrubou o último Anjo. \n            ...\n            Mas o silêncio dura pouco demais. \n            Uma figura pálida se ergue diante de você. \n            REI? \n            ...\n            Não. \n            Não é só Rei. \n            É algo maior do que qualquer \n            Anjo que você já enfrentou. \n            O Terceiro Impacto está começando. ";
+    public static final String REI_LILITH_DESCRICAO = "...";
+    public static final String REI_LILITH_ESTILO = "...";
+
+
     public static final String LILITH_DESCRICAO = "No fundo do Terminal Dogma, crucificada, está a razão de todos os Anjos\n" +
             "terem vindo. É o fim da linha: sem fraqueza óbvia, nem pontos fortes\n" +
             "exagerados, só o equilíbrio de quem esperou até o último inimigo chegar.";
@@ -190,4 +225,34 @@ public class DadosAnjos {
     public static final String BARDIEL_ESTILO   = "Aguenta o castigo e se defende de vez em quando, o que o torna um inimigo duro de derrubar.";
     public static final String KAWORU_ESTILO    = "Calmo e difícil de acertar, defende com frequência e fica ainda mais fechado quando entra em guarda.";
     public static final String LILITH_ESTILO    = "Equilibrada em tudo, defende na medida certa e se fecha um pouco mais quando entra em guarda, sem nenhum extremo.";
+
+    public static final String FIM_ASCII = """
+ T H E   E N D   O F
+ E V A N G E L I O N
+ ===================
+
+   .        *            .        +         .         *        .       .
+      .          .   *         .         .        +         .
+ *        .   +          .        _.--\"\"\"\"\"\"\"--._     .         *
+      .            .         .  .-'  o    .   O  '-.      .
+   .        *            .    .'  .     O      o    '.   .       .
+        .        .   *       /   O     .     .     .   \\     .
+   +          .          .  |  .     o     O      .     |      *
+         .        .         |    .      .       o    .   |  .
+   .   *       .             \\  o    .      O     .     /     .
+          .            .      '.   .     o      .    .'
+     *         .    .       .   '-._   .      .  _.-'     .
+ .       .         .                `\"\"--....--\"\"`    .         *
+
+ __..--\"\"\\___    __   ___..-'\"\"'--.__    _    ___..--'   __..--\"\"\\___
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+########################################################################
+========================================================================
+
+                                             o
+                                            /#\\
+                                  @         | |
+                                 (#)
+""";
+
 }

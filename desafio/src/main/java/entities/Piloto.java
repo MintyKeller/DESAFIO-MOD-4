@@ -37,26 +37,24 @@ public abstract class Piloto extends Personagem {
 
     public boolean tomarPocao() {
         if (nroPocoes == 0) {
-            System.out.println("Não há mais poções disponíveis!");
-            System.out.println("Você ainda está no seu turno, tente novamente:");
+            System.out.println("            Não há mais poções disponíveis!");
+            System.out.println("            Você ainda está no seu turno, tente novamente:");
             return false;
         }
         if (getVida() == getVidaMaxima()) {
-            System.out.println("Você está com a vida máxima, e portanto não pode curar!");
-            System.out.println("Você ainda está no seu turno, tente novamente:");
+            System.out.println("            Você está com a vida máxima, e portanto não pode curar!");
+            System.out.println("            Você ainda está no seu turno, tente novamente:");
             return false;
         }
         nroPocoes--;
         int antes = getVida();
         curar(CURA_POCAO);
-        System.out.println("Você usou uma poção e recuperou " + (getVida() - antes)
+        System.out.println("            Você usou uma poção e recuperou " + (getVida() - antes)
                 + " de vida (Poções restantes: " + nroPocoes + ")");
         return true;
     }
 
-    public void curar(int quantidade) {
-        setVida(Math.min(getVidaMaxima(), getVida() + quantidade));
-    }
+
 
 
     public abstract boolean usarEspecial(Personagem alvo);

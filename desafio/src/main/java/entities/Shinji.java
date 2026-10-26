@@ -16,13 +16,13 @@ public class Shinji extends Piloto {
     public boolean ataqueForte(Personagem alvo) {
         //ataque forte (+18) que gasta vida
         if (!temEspecial()) {
-            System.out.println("Acabaram os ataques fortes!");
-            System.out.println("Você ainda está no seu turno, tente novamente:");
+            System.out.println("            Acabaram os ataques fortes!");
+            System.out.println("            Você ainda está no seu turno, tente novamente:");
             return false;
         }
         alvo.tomarDano(getAtaque() + BONUS_DANO);
         setVida(Math.max(1, getVida() - CUSTO_VIDA));
-        System.out.println(getNome() + " usa ATAQUE FORTE e sacrifica " + CUSTO_VIDA + " de vida!");
+        System.out.println(""            +getNome() + " usa ATAQUE FORTE e sacrifica " + CUSTO_VIDA + " de vida!");
         gastarUsoEspecial();
         return true;
     }
@@ -40,7 +40,7 @@ public class Shinji extends Piloto {
 
     @Override
     public String getDescricaoEspecial() {
-        return "Causa " + (getAtaque() + BONUS_DANO) + " de dano, mas sacrifica " + CUSTO_VIDA
+        return "            Causa " + (getAtaque() + BONUS_DANO) + " de dano, mas sacrifica " + CUSTO_VIDA
                 + " de vida (nunca te deixa com menos de 1).";
     }
 

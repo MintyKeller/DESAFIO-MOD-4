@@ -1,4 +1,5 @@
 package entities;
+import java.util.Random;
 
 public class Inimigo extends Personagem {
     //atributos
@@ -41,5 +42,26 @@ public class Inimigo extends Personagem {
 
     public String getEstilo() {
         return estilo;
+    }
+
+    //metodos
+    protected Random random = new Random();
+
+    public void turno(Piloto alvo) {
+        iniciarTurno();
+        agir(alvo);
+    }
+    protected void agir(Piloto alvo) {
+        if (escolherAcao() == Acao.ATACAR) {
+            System.out.println("            " + getNome() + " ataca!");
+            atacar(alvo);
+        } else {
+            defender();
+        }
+    }
+    protected Acao escolherAcao() {
+        // vida alta usa a tabela 1, vida baixa usa a tabela 2
+        Acao[] tabela = getVida() > getVidaMaxima() / 2 ? pAtacarDefender1 : pAtacarDefender2;
+        return tabela[random.nextInt(tabela.length)];
     }
 }

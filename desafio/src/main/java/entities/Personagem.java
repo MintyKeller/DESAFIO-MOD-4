@@ -101,6 +101,10 @@ public abstract class Personagem {
         defendendo = true;
         System.out.println(nome + "  se prepara para defender!");
     }
+
+    public void curar(int quantidade) {
+        setVida(Math.min(getVidaMaxima(), getVida() + quantidade));
+    }
 }
 
 
