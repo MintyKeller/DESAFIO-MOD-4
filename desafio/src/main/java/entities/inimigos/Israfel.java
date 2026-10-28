@@ -1,6 +1,10 @@
-package entities;
+package entities.inimigos;
 
-public class Israfel extends Inimigo{
+import entities.Acao;
+import entities.Inimigo;
+import entities.Piloto;
+
+public class Israfel extends Inimigo {
 
 
     public Israfel(String nome, int vida, int ataque, int defesa, int vidaMaxima,
@@ -8,6 +12,8 @@ public class Israfel extends Inimigo{
                    String descricao, String estilo) {
         super(nome, vida, ataque, defesa, vidaMaxima, ascii,
                 pAtacarDefender1, pAtacarDefender2, descricao, estilo);
+        setDescricaoEspecial("Ataque Sincronizado: sempre que decide atacar, tem 2/3 de chance de golpear duas vezes seguidas.");
+
     }
 
     //HABILIDADE ESPECIAL: ATAQUE ESPECIAL = chance de ⅔ (66,6%) de ataque duplo.

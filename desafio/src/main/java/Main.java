@@ -1,4 +1,7 @@
 import entities.*;
+import entities.pilotos.Asuka;
+import entities.pilotos.Rei;
+import entities.pilotos.Shinji;
 import utils.FabricaInimigos;
 import utils.Loja;
 import utils.Registro;
@@ -129,7 +132,7 @@ public class Main {
 
             System.out.println("            \n            ===== BATALHA " + numeroBatalha + " de " + inimigos.size() + " =====");
             apresentarInimigo( inimigo);
-
+            piloto.limparEfeitos();// não deixa dano contínuo vazar da batalha anterior
             lutar(piloto, inimigo, sc);
 
             // 2ª fase: só na última batalha, e só se o piloto sobreviveu à fase 1
@@ -168,7 +171,7 @@ public class Main {
     public static void lutar(Piloto piloto, Inimigo inimigo, Scanner sc) {
         while (piloto.estaVivo() && inimigo.estaVivo()) {
             turnoDoPiloto(piloto, inimigo, sc);
-            if (!inimigo.estaVivo()) {
+            if (!inimigo.estaVivo() || !piloto.estaVivo()) { //se morrer por dano continuo
                 break;
             }
             turnoDoInimigo(inimigo, piloto);
@@ -177,8 +180,15 @@ public class Main {
 
 
     public static void turnoDoPiloto(Piloto piloto, Inimigo inimigo, Scanner sc) {
-        piloto.iniciarTurno(); // zera o defendendo
         System.out.println("            ========================SEU TURNO========================");
+        piloto.iniciarTurno();   // zera o defendendo e aplica dano contínuo
+        if (!piloto.estaVivo()) {
+            return;              // morreu pelo dano contínuo
+        }
+        if (piloto.perderTurno()) {
+            System.out.println("            Você está preso e perde o turno!");
+            return;
+        }
         exibirStatus(inimigo, piloto);
         mostrarMenuAcoes(piloto);
         boolean agiu = false;
@@ -243,6 +253,7 @@ public class Main {
         System.out.println("            Chance de defender: " + chanceDefender(inimigo.getpAtacarDefender1())
                 + "% (" + chanceDefender(inimigo.getpAtacarDefender2()) + "% quando ferido)");
         System.out.println("            Estilo: " + inimigo.getEstilo());
+        System.out.println("            Especial: " + inimigo.getDescricaoEspecial());
         System.out.println("            ====================================");
     }
 

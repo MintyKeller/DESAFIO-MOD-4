@@ -1,4 +1,8 @@
-package entities;
+package entities.inimigos;
+
+import entities.Acao;
+import entities.Inimigo;
+import entities.Piloto;
 
 public class Ramiel extends Inimigo {
 
@@ -10,6 +14,8 @@ public class Ramiel extends Inimigo {
                   String descricao, String estilo) {
         super(nome, vida, ataque, defesa, vidaMaxima, ascii,
                 pAtacarDefender1, pAtacarDefender2, descricao, estilo);
+        setDescricaoEspecial("Raio de Partículas: depois de 2 turnos, dispara um raio de dano alto, e no turno seguinte fica recarregando, sem agir.");
+
     }
 
     //ATAQUE ESPECIAL = ATAQUE FORTE QUE TEM QUE RECARREGAR,

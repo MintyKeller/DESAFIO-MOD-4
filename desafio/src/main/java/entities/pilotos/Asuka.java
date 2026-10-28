@@ -1,4 +1,7 @@
-package entities;
+package entities.pilotos;
+import entities.Personagem;
+import entities.Piloto;
+
 import java.util.Random;
 //Asuka == arqueiro
 public class Asuka extends Piloto {
@@ -44,7 +47,7 @@ public class Asuka extends Piloto {
 
     @Override
     public String getDescricaoEspecial() {
-        return "            "+CHANCE_ATAQUE + "% de chance de causar " + (getAtaque() * 2)
+        return ""+CHANCE_ATAQUE + "% de chance de causar " + (getAtaque() * 2)
                 + " de dano. Se falhar, acerta um tiro normal de " + getAtaque() + ".";
     }
 }

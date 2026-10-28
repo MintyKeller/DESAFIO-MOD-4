@@ -9,6 +9,7 @@ public class Inimigo extends Personagem {
 
     private String descricao;
     private String estilo;
+    private String descricaoEspecial = "Nenhuma habilidade especial.";
 
     //construtor
     public Inimigo(String nome, int vida, int ataque, int defesa, int vidaMaxima,
@@ -20,6 +21,7 @@ public class Inimigo extends Personagem {
         this.pAtacarDefender2 = pAtacarDefender2;
         this.descricao = descricao;
         this.estilo = estilo;
+
 
     }
 
@@ -42,6 +44,14 @@ public class Inimigo extends Personagem {
 
     public String getEstilo() {
         return estilo;
+    }
+
+    public String getDescricaoEspecial() {
+        return descricaoEspecial;
+    }
+
+    public void setDescricaoEspecial(String descricaoEspecial) {
+        this.descricaoEspecial = descricaoEspecial;
     }
 
     //metodos

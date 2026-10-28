@@ -9,6 +9,10 @@ public abstract class Personagem {
     private boolean defendendo = false;
     private int vidaMaxima;
 
+    private int danoContinuo = 0;
+    private int turnosDanoContinuo = 0;
+    private int turnosPresos = 0;
+
     //construtor
     public Personagem(String nome, int vida, int ataque, int defesa, int vidaMaxima) {
         this.nome = nome;
@@ -64,6 +68,11 @@ public abstract class Personagem {
     // chamado no começo do turno de cada um (jogador e inimigo)
     public void iniciarTurno() {
         defendendo = false;
+        if (turnosDanoContinuo > 0) {
+            System.out.println("            " + nome + " sofre dano contínuo!");
+            tomarDanoDireto(danoContinuo);   // ignora defesa
+            turnosDanoContinuo--;
+        }
     }
 
     public boolean estaVivo() {
@@ -105,6 +114,33 @@ public abstract class Personagem {
     public void curar(int quantidade) {
         setVida(Math.min(getVidaMaxima(), getVida() + quantidade));
     }
+
+    //bardiel e Matarael usam
+    public void aplicarDanoContinuo(int dano, int turnos) {
+        danoContinuo = dano;
+        turnosDanoContinuo = turnos;
+    }
+
+    //leliel usa
+    public void prender(int turnos) {
+        turnosPresos = turnos;
+    }
+
+    //leliel usa
+    public boolean perderTurno() {
+        if (turnosPresos > 0) {
+            turnosPresos--;
+            return true;
+        }
+        return false;
+    }
+
+    public void limparEfeitos() {
+        danoContinuo = 0;
+        turnosDanoContinuo = 0;
+        turnosPresos = 0;
+    }
+
 }
 
 

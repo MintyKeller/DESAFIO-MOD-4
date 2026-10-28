@@ -1,4 +1,7 @@
-package entities;
+package entities.pilotos;
+
+import entities.Personagem;
+import entities.Piloto;
 
 //Shinji == guerreiro
 public class Shinji extends Piloto {
@@ -40,7 +43,7 @@ public class Shinji extends Piloto {
 
     @Override
     public String getDescricaoEspecial() {
-        return "            Causa " + (getAtaque() + BONUS_DANO) + " de dano, mas sacrifica " + CUSTO_VIDA
+        return "Causa " + (getAtaque() + BONUS_DANO) + " de dano, mas sacrifica " + CUSTO_VIDA
                 + " de vida (nunca te deixa com menos de 1).";
     }
 

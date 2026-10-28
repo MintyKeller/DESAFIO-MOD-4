@@ -1,4 +1,8 @@
-package entities;
+package entities.inimigos;
+
+import entities.Acao;
+import entities.Inimigo;
+import entities.Piloto;
 
 public class Sahaquiel extends Inimigo {
 
@@ -10,6 +14,8 @@ public class Sahaquiel extends Inimigo {
                      String descricao, String estilo) {
         super(nome, vida, ataque, defesa, vidaMaxima, ascii,
                 pAtacarDefender1, pAtacarDefender2, descricao, estilo);
+        setDescricaoEspecial("Queda Orbital: a cada 3 turnos se joga sobre você com dano enorme, mas também se machuca com o impacto.");
+
     }
 
     //HABILIDADE ESPECIAL:

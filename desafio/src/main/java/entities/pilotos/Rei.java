@@ -1,4 +1,8 @@
-package entities;
+package entities.pilotos;
+
+import entities.Personagem;
+import entities.Piloto;
+
 //Rei == mago
 public class Rei extends Piloto {
 
@@ -33,7 +37,7 @@ public class Rei extends Piloto {
 
     @Override
     public String getDescricaoEspecial() {
-        return "            Causa " + (getAtaque() + BONUS_DANO) + " de dano ignorando a defesa do alvo, mais um adicional de 5 no ataque.";
+        return "Causa " + (getAtaque() + BONUS_DANO) + " de dano ignorando a defesa do alvo, mais um adicional de 5 no ataque.";
     }
 
 }
