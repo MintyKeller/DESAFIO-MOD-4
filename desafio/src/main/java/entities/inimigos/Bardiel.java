@@ -24,8 +24,7 @@ public class Bardiel extends Inimigo {
         turnos++;
         if (turnos % 3 == 0) {   // td 3º turno
             System.out.println("            " + getNome() + " estica os braços do Eva-03 e agarra seu pescoço: ESTRANGULAMENTO!");
-            int dano = 91
-                    ;
+            int dano = 9;
             alvo.tomarDanoDireto(dano);                   // aperto inicial, ignora defesa
             alvo.aplicarDanoContinuo(dano, DURACAO);      // e continua apertando
         } else {
